@@ -11,6 +11,8 @@
 |
 */
 
+use Illuminate\Support\Facades\Route;
+
 Route::get('/', function () use ($router) {
     return $router->app->version();
 });
@@ -20,6 +22,6 @@ Route::get('/hello', function () {
 });
 
 Route::post('/cafe/create', 'CafeController@createCafe');
-Route::get('/cafe/update/{id}', 'CafeController@updateCafe');
-Route::get('/cafe/delete/{id}', 'CafeController@deleteCafe');
+Route::put('/cafe/update/{id}', 'CafeController@updateCafe');
+Route::delete('/cafe/delete/{id}', 'CafeController@deleteCafe');
 Route::get('/cafe/', 'CafeController@index');
