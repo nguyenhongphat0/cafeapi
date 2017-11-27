@@ -11,6 +11,15 @@
 |
 */
 
-$router->get('/', function () use ($router) {
+Route::get('/', function () use ($router) {
     return $router->app->version();
 });
+
+Route::get('/hello', function () {
+    return 'hello';
+});
+
+Route::post('/cafe/create', 'CafeController@createCafe');
+Route::get('/cafe/update/{id}', 'CafeController@updateCafe');
+Route::get('/cafe/delete/{id}', 'CafeController@deleteCafe');
+Route::get('/cafe/', 'CafeController@index');
