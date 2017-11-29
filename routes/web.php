@@ -21,7 +21,15 @@ Route::get('/hello', function () {
     return 'hello';
 });
 
-Route::post('/cafe/create', 'CafeController@createCafe');
-Route::put('/cafe/update/{id}', 'CafeController@updateCafe');
-Route::delete('/cafe/delete/{id}', 'CafeController@deleteCafe');
-Route::get('/cafe/', 'CafeController@index');
+Route::group(['prefix' => '/api/user'], function () {
+    Route::get('/', 'UserController@index');
+    Route::get('/login', 'UserController@login');
+    Route::get('/logout', 'UserController@logout');
+});
+
+Route::group(['prefix' => '/api/cafe'], function () {
+    Route::get('/', 'CafeController@index');
+    Route::get('/create', 'CafeController@createCafe');
+    Route::put('/update/{id}', 'CafeController@updateCafe');
+    Route::delete('/delete/{id}', 'CafeController@deleteCafe');
+});

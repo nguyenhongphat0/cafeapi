@@ -3,13 +3,21 @@
 namespace App\Http\Controllers;
 
 use App\Cafe;
-use App\Http\Controllers\Controller;
+use Gate;
 use Illuminate\Http\Request;
 
 class CafeController extends Controller
 {
+    public function index()
+    {
+        return response()->json(Cafe::all());
+    }
+
     public function createCafe(Request $request)
     {
+        if (Gate::denies('change_cafes')) {
+            return response('User do not have permission to create new cafe', 403);
+        }
         if (!$request->has('name')) {
             return response('Name not set', 202);
         }
@@ -25,6 +33,9 @@ class CafeController extends Controller
     
     public function updateCafe(Request $request, $id)
     {
+        if (Gate::denies('change_cafes')) {
+            return response('User do not have permission to create new cafe', 403);
+        }
         $cafe = Cafe::findOrFail($id);
         if (!$request->has('name')) {
             return response('Name not set', 202);
@@ -45,13 +56,11 @@ class CafeController extends Controller
 
     public function deleteCafe($id)
     {
+        if (Gate::denies('change_cafes')) {
+            return response('User do not have permission to create new cafe', 403);
+        }
         $cafe = Cafe::findOrFail($id);
         $cafe->delete();
         return response()->json($cafe);
-    }
-    
-    public function index()
-    {
-        return response()->json(Cafe::all());
     }
 }
